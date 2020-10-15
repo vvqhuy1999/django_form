@@ -1,0 +1,46 @@
+<!--app/templates/product_list.html-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<div class="container pt-5">
+    <table class="table table-bordered">
+        <thead>
+            <tr style="text-align: center;">
+                <th style="width: 5%;" >#</th>
+                <th style="width: 15%;">Loại</th>
+                <th style="width: 12%;">Mã</th>
+                <th style="width: 15%;">Tên</th>
+                <th style="width: 12%;">Giá</th>
+                <th style="width: 25%;">Ảnh</th>
+                <th style="width: 15%;" ></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in productList %}
+                <tr style="text-align: center;">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{p.category.name}}</td>
+                    <td>{{p.code}}</td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.price}}</td>
+                    <td>
+                        <img src='/{{p.image}}' style="max-height: 150px;">
+                    </td>
+                    <td class="pt-5">
+                        <a class="btn btn-sm btn-danger" href='javascript:deleteProduct({{p.id}})'>Xoa</a>
+                        <a class="btn btn-sm btn-secondary" href='{% url "update-product" p.id %}'>Chinh sua</a>
+                    </td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href='{% url "create-product" %}'>
+        Thêm sản phẩm
+    </a>
+</div>
+
+<script>
+    function deleteProduct(id){
+        if(confirm('Ban co muon xoa san pham ?')){
+            location.href = '/delete_product/' +id;
+        }
+    }
+</script>
